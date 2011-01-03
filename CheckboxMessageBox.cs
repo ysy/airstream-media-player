@@ -17,8 +17,16 @@ using System.Windows.Forms;
 
 namespace AirStreamPlayer
 {
+    /// <remarks>
+    /// Displays a MessageBox with a checkbox to allow the user to say they don't want to see the message again.
+    /// Construct the object, then call showMessage() to display the messagebox. This will return an int, that says whether the user checked the checkbox
+    /// </remarks>
     public partial class CheckboxMessageBox : Form
     {
+        /// <summary>
+        /// Constructor for the message box
+        /// </summary>
+        /// <param name="message">The message to display in the box</param>
         public CheckboxMessageBox(string message)
         {
             InitializeComponent();

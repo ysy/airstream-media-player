@@ -18,6 +18,9 @@ using System.Diagnostics;
 
 namespace AirStreamPlayer
 {
+    /// <remarks>
+    /// An about box for the application to show title, byline, link etc.
+    /// </remarks>
     public partial class About : Form
     {
         public About()
