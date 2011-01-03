@@ -107,9 +107,10 @@
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.byline);
             this.Controls.Add(this.title);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "About";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About Air Stream player for Windows";
             this.ResumeLayout(false);
