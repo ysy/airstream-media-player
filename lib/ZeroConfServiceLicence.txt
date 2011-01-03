@@ -1,0 +1,3 @@
+﻿This project uses the zeroconfignetservices Bonjour for .NET library by deusty which is released under the New BSD License.
+
+Details of zeroconfignetservices library can be found here http://code.google.com/p/zeroconfignetservices/

@@ -44,7 +44,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="ZeroconfService">
-      <HintPath>..\lib\ZeroconfService.dll</HintPath>
+      <HintPath>lib\ZeroconfService.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
