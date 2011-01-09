@@ -127,6 +127,7 @@ namespace AirStreamPlayer
                     {
                         if (parameters.Length > 0) //if the playback url exists in the paramters (should be first arg)...
                         {
+                            imageToolStripMenuItem.Enabled = false;
 
                             //TODO: At the moment, m4v files direct from the iDevice aren't supported as I dont know how to pass the PIC request on to quicktime, maybe fix it in future. For now, I have to ignore it.
                             if (parameters[0].Trim().EndsWith("m4v"))
@@ -202,6 +203,8 @@ namespace AirStreamPlayer
                     {
                         if (parameters.Length > 0)//if the playback url exists in the paramters (should be first arg)...
                         {
+                            imageToolStripMenuItem.Enabled = false;
+
                             //TODO: At the moment, m4v files direct from the iDevice aren't supported as I dont know how to pass the PIC request on to quicktime, maybe fix it in future. For now, I have to ignore it.
                             if (parameters[0].Trim().EndsWith("m4v"))
                             {
@@ -504,6 +507,9 @@ namespace AirStreamPlayer
                 {
                     setPlayerVisibility(false);
                 }
+
+                //enable the image toolbar item
+                imageToolStripMenuItem.Enabled = true;
 
                 //show the picture box and set its image
                 setPictureBoxVisibility(true);

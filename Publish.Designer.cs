@@ -44,6 +44,8 @@
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.quicktimePlayer = new AxQTOControlLib.AxQTControl();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.DebugBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
@@ -61,7 +63,7 @@
             this.messagesBox.Name = "messagesBox";
             this.messagesBox.ReadOnly = true;
             this.messagesBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.messagesBox.Size = new System.Drawing.Size(942, 249);
+            this.messagesBox.Size = new System.Drawing.Size(926, 249);
             this.messagesBox.TabIndex = 1;
             // 
             // label1
@@ -79,10 +81,11 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
+            this.imageToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(975, 24);
+            this.menuStrip.Size = new System.Drawing.Size(959, 24);
             this.menuStrip.TabIndex = 4;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -143,7 +146,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -155,7 +158,7 @@
             this.DebugBox.Controls.Add(this.messagesBox);
             this.DebugBox.Location = new System.Drawing.Point(12, 27);
             this.DebugBox.Name = "DebugBox";
-            this.DebugBox.Size = new System.Drawing.Size(951, 271);
+            this.DebugBox.Size = new System.Drawing.Size(935, 271);
             this.DebugBox.TabIndex = 5;
             this.DebugBox.Visible = false;
             // 
@@ -200,6 +203,23 @@
             this.pictureBox.TabIndex = 7;
             this.pictureBox.TabStop = false;
             this.pictureBox.Visible = false;
+
+            // 
+            // imageToolStripMenuItem
+            // 
+            this.imageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveImageAsToolStripMenuItem});
+            this.imageToolStripMenuItem.Enabled = false;
+            this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
+            this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.imageToolStripMenuItem.Text = "Image";
+            // 
+            // saveImageAsToolStripMenuItem
+            // 
+            this.saveImageAsToolStripMenuItem.Name = "saveImageAsToolStripMenuItem";
+            this.saveImageAsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.saveImageAsToolStripMenuItem.Text = "Save Image As...";
+            this.saveImageAsToolStripMenuItem.Click += new System.EventHandler(this.saveImageAsToolStripMenuItem_Click);
             // 
             // Publish
             // 
@@ -225,7 +245,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -245,5 +264,7 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fullscreenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem useWindowsMediaPlayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveImageAsToolStripMenuItem;
     }
 }

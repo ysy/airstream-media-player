@@ -592,6 +592,43 @@ namespace AirStreamPlayer
             MessageBox.Show("In order to make your changes take effect, please restart the program"+wmpMessage, "Restart Program to change", MessageBoxButtons.OK, MessageBoxIcon.Information );
         }
 
+        private void saveImageAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox.Image != null)
+            {
+                using (SaveFileDialog dialog = new SaveFileDialog())
+                {
+                    dialog.Filter = "jpeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif|PNG Image|*.png";
+                    dialog.Title = "Save an Image File";
+
+                    if (dialog.ShowDialog(this) == DialogResult.OK)
+                    {
+                        System.Drawing.Imaging.ImageFormat theFormat;
+                        switch (dialog.FilterIndex)
+                        {
+                            case 1: //FilterIndex seems to start at 1, not zero
+                                theFormat = System.Drawing.Imaging.ImageFormat.Jpeg;
+                                break;
+                            case 2:
+                                theFormat = System.Drawing.Imaging.ImageFormat.Bmp;
+                                break;
+                            case 3:
+                                theFormat = System.Drawing.Imaging.ImageFormat.Gif;
+                                break;
+                            case 4:
+                                theFormat = System.Drawing.Imaging.ImageFormat.Png;
+                                break;
+                            default: //should never get reached, but just in case something weird happens
+                                theFormat = System.Drawing.Imaging.ImageFormat.Jpeg;
+                                break;      
+                        }
+                        pictureBox.Image.Save(dialog.FileName, theFormat);
+                    }
+                }
+            }
+
+        }
+
 
     }
 }
