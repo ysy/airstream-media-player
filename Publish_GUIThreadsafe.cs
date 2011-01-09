@@ -156,8 +156,9 @@ namespace AirStreamPlayer
 
                             if (quicktimePlayer.Movie != null)
                             {
+                                videoHasAlreadyBeenStarted = false; //new video started, so set this to false.
                                 addMovieEventListeners(quicktimePlayer.Movie);
-                                quicktimePlayer.Movie.Play();
+                                quicktimePlayer.Movie.Play();                     
                             }
                         }
                     }
@@ -215,6 +216,8 @@ namespace AirStreamPlayer
                             setPlayerVisibility(true);
                             player.URL = parameters[0];
                             theServer.sendStatusMessage("loading");
+
+                            videoHasAlreadyBeenStarted = false; //new video started, so set this to false.
 
                             //if a start position was given, seek to it
                             if (parameters.Length > 1)

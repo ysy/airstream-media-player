@@ -38,14 +38,15 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullscreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DebugBox = new System.Windows.Forms.Panel();
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.quicktimePlayer = new AxQTOControlLib.AxQTControl();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.imageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveImageAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startVideosFullscreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.DebugBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
@@ -85,7 +86,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(959, 24);
+            this.menuStrip.Size = new System.Drawing.Size(975, 24);
             this.menuStrip.TabIndex = 4;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -94,6 +95,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showDebugToolStripMenuItem,
             this.useWindowsMediaPlayerToolStripMenuItem,
+            this.startVideosFullscreenToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -110,7 +112,7 @@
             // 
             this.useWindowsMediaPlayerToolStripMenuItem.Name = "useWindowsMediaPlayerToolStripMenuItem";
             this.useWindowsMediaPlayerToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.useWindowsMediaPlayerToolStripMenuItem.Text = "Use Windows Media Player";
+            this.useWindowsMediaPlayerToolStripMenuItem.Text = "Use Windows Media &Player";
             this.useWindowsMediaPlayerToolStripMenuItem.Click += new System.EventHandler(this.useWindowsMediaPlayerToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
@@ -131,9 +133,25 @@
             // fullscreenToolStripMenuItem
             // 
             this.fullscreenToolStripMenuItem.Name = "fullscreenToolStripMenuItem";
-            this.fullscreenToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.fullscreenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fullscreenToolStripMenuItem.Text = "&Fullscreen";
             this.fullscreenToolStripMenuItem.Click += new System.EventHandler(this.fullscreenToolStripMenuItem_Click);
+            // 
+            // imageToolStripMenuItem
+            // 
+            this.imageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveImageAsToolStripMenuItem});
+            this.imageToolStripMenuItem.Enabled = false;
+            this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
+            this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.imageToolStripMenuItem.Text = "&Image";
+            // 
+            // saveImageAsToolStripMenuItem
+            // 
+            this.saveImageAsToolStripMenuItem.Name = "saveImageAsToolStripMenuItem";
+            this.saveImageAsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.saveImageAsToolStripMenuItem.Text = "Save Image As...";
+            this.saveImageAsToolStripMenuItem.Click += new System.EventHandler(this.saveImageAsToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -146,7 +164,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -203,23 +221,13 @@
             this.pictureBox.TabIndex = 7;
             this.pictureBox.TabStop = false;
             this.pictureBox.Visible = false;
-
             // 
-            // imageToolStripMenuItem
+            // startVideosFullscreenToolStripMenuItem
             // 
-            this.imageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveImageAsToolStripMenuItem});
-            this.imageToolStripMenuItem.Enabled = false;
-            this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
-            this.imageToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.imageToolStripMenuItem.Text = "Image";
-            // 
-            // saveImageAsToolStripMenuItem
-            // 
-            this.saveImageAsToolStripMenuItem.Name = "saveImageAsToolStripMenuItem";
-            this.saveImageAsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.saveImageAsToolStripMenuItem.Text = "Save Image As...";
-            this.saveImageAsToolStripMenuItem.Click += new System.EventHandler(this.saveImageAsToolStripMenuItem_Click);
+            this.startVideosFullscreenToolStripMenuItem.Name = "startVideosFullscreenToolStripMenuItem";
+            this.startVideosFullscreenToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.startVideosFullscreenToolStripMenuItem.Text = "&Start Videos Fullscreen";
+            this.startVideosFullscreenToolStripMenuItem.Click += new System.EventHandler(this.startVideosFullscreenToolStripMenuItem_Click);
             // 
             // Publish
             // 
@@ -245,6 +253,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -266,5 +275,6 @@
         private System.Windows.Forms.ToolStripMenuItem useWindowsMediaPlayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveImageAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startVideosFullscreenToolStripMenuItem;
     }
 }

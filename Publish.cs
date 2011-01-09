@@ -34,7 +34,9 @@ namespace AirStreamPlayer
         NetService publishService = null;
         Server theServer = null;
         bool quicktimeAvailable = true; //optimistic
-        bool usingQuicktime = true; 
+        bool usingQuicktime = true;
+
+        bool videoHasAlreadyBeenStarted = false; //this is used for the windows media player fullscreen. WMP can only fullscreen once a video has been loaded, which means we have to attach the "start video fullscreen" preference code to the Playing event of the WMP control. However, if this check is made every time the playing event is fired, then if the user makes the choice of exiting fullscreen, then pauses the player and plays it again, fullscreen will be entered again - when they specifically chose to exit fullscreen. So at the start of loading each video I will set this to false, then at the end of the "playing" event for each player, I will set it to true. Then the fullscreen code for each player will check that this variable is false before making the WMP control fullscreen. Even though this isn't necessary for the quicktime player (it can go fullscreen before the video is loaded, so doesnt need events), I will make it work this way too for consistency.
 
         /// <remarks>
         /// The controller part of the app, goes with the partial Publisher.Designer class which defines the GUI
@@ -110,14 +112,17 @@ namespace AirStreamPlayer
                 //add the delegate to do something when authorisation key is received from server
                 theServer.authorisationRequest += new Server.authorisationRequestHandler(theServer_authorisationRequest);
 
-                //start publishing the airplay service over Bonjour.
-                DoPublish();
-
                 //check if the debug window should be displayed, and display it if so
                 if (Properties.Settings.Default.debug == true)
                 {
                     setDebugVisibility(true);
                 }
+
+                //Set the check next to the "Start videos fullscreen" box if needed
+                startVideosFullscreenToolStripMenuItem.Checked = Properties.Settings.Default.startVideosFullscreen;
+
+                //start publishing the airplay service over Bonjour.
+                DoPublish();
             }
             else
             {
@@ -438,11 +443,17 @@ namespace AirStreamPlayer
                 case (int)QTEventIDsEnum.qtEventRateWillChange:
                         var rate = (e.eventObject.GetParam(QTEventObjectParametersEnum.qtEventParamMovieRate));
                         int therate = Convert.ToInt16(rate);
-                        if (therate > 0)
+                        if (therate > 0) //playing
                         {
                             theServer.sendStatusMessage("playing");
+
+                            if (Properties.Settings.Default.startVideosFullscreen && !videoHasAlreadyBeenStarted) //if the user has chosen to start videos fullscreen, set the fullscreen to true. VideoHasAlreadyBeenStarted also needs to be false, as if it is false it means this is the first time the playing event has been called for this particular video. If it is true, it means the video has already started before, and this playing event was fired probably after the video had been paused, so don't do the fullscreen again as the user has made their choice of how they would like to play the video.
+                            {
+                                setVideoFullscreen(true);
+                            }
+                            videoHasAlreadyBeenStarted = true; //set this to true to say that the playing event has been fired at least once, so any subsequent firings of the event aren't the first time the player has started playing this video (so any playing events from now on are probably resuming playback, not starting it)
                         }
-                        else
+                        else //paused
                         {
                             theServer.sendStatusMessage("paused");
                         }
@@ -496,22 +507,26 @@ namespace AirStreamPlayer
         /// <param name="e">The playback event</param>
         private void player_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
         {
+            Debug.WriteLine("Windows Media Player event state code: " + e.newState);
             //media player control's playstate change event handler
-            if (player.playState == WMPLib.WMPPlayState.wmppsPlaying)
+            if (e.newState == 3) //playing
             {
                 Debug.WriteLine("Playerstate changed to started");
                 theServer.sendStatusMessage("playing");
 
+                if (Properties.Settings.Default.startVideosFullscreen && !videoHasAlreadyBeenStarted) //if the user has chosen to start videos fullscreen, set the fullscreen to true. VideoHasAlreadyBeenStarted also needs to be false, as if it is false it means this is the first time the playing event has been called for this particular video. If it is true, it means the video has already started before, and this playing event was fired probably after the video had been paused, so don't do the fullscreen again as the user has made their choice of how they would like to play the video.
+                {
+                    setVideoFullscreen(true);
+                }
+                videoHasAlreadyBeenStarted = true; //set this to true to say that the playing event has been fired at least once, so any subsequent firings of the event aren't the first time the player has started playing this video (so any playing events from now on are probably resuming playback, not starting it)
+
+
             }
-            else if (player.playState == WMPLib.WMPPlayState.wmppsPaused)
+            else if (e.newState == 2) //paused
             {
                 Debug.WriteLine("Playerstate changed to paused");
                 theServer.sendStatusMessage("paused");
             }
-            else if (player.playState == WMPLib.WMPPlayState.wmppsStopped)
-            {
-            }
-
         }
 
         /// <summary>
@@ -592,6 +607,11 @@ namespace AirStreamPlayer
             MessageBox.Show("In order to make your changes take effect, please restart the program"+wmpMessage, "Restart Program to change", MessageBoxButtons.OK, MessageBoxIcon.Information );
         }
 
+        /// <summary>
+        /// Saves the current image displayed in pictureBox to a file, with the option of various image filetypes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveImageAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (pictureBox.Image != null)
@@ -627,6 +647,19 @@ namespace AirStreamPlayer
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Saves the user's choice of whether to start images fullscreen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void startVideosFullscreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //check if the option is currently checked. If it's checked, uncheck it and save the option. Otherwise, do the oposite.
+            startVideosFullscreenToolStripMenuItem.Checked = (!startVideosFullscreenToolStripMenuItem.Checked);
+            Properties.Settings.Default.startVideosFullscreen = startVideosFullscreenToolStripMenuItem.Checked;
+            Properties.Settings.Default.Save();
         }
 
 

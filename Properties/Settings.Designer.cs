@@ -58,5 +58,17 @@ namespace AirStreamPlayer.Properties {
                 this["useWMPInstead"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool startVideosFullscreen {
+            get {
+                return ((bool)(this["startVideosFullscreen"]));
+            }
+            set {
+                this["startVideosFullscreen"] = value;
+            }
+        }
     }
 }
