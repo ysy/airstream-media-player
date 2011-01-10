@@ -69,6 +69,9 @@ namespace AirStreamPlayer
                 useWindowsMediaPlayerToolStripMenuItem.Enabled = false;
             }
 
+            systemTrayIcon.Icon = Properties.Resources.icon;
+            this.Icon = Properties.Resources.icon;
+
             //check if Bonjour is installed and exit app if it isn't
             if (checkBonjourInstalled())
             {            
@@ -399,6 +402,50 @@ namespace AirStreamPlayer
                 setVideoFullscreen(false);
             }
         }
+
+        /// <summary>
+        /// Minimises the application to the system tray when the application is resized, instead of the taskbar.
+        /// It does this by creating a notifyicon (system tray icon), then hiding this Form instead of minimising it.
+        /// It will also display a balloon tip to say what's happened, unless the user has previously clicked the balloon tip to stop it showing again.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Publish_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized) //minimising the window, show the system tray icon and hide the form
+            {
+                systemTrayIcon.Visible = true;
+                if (Properties.Settings.Default.showMinimisedBalloonTip)
+                {
+                    systemTrayIcon.ShowBalloonTip(500);
+                }
+                this.Hide();
+            }
+        }
+
+        /// <summary>
+        /// Restores the window, is called when the system tray icon is double clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void systemTrayIcon_DoubleClick(object sender, EventArgs e)
+        {
+            this.Show();
+            this.WindowState = FormWindowState.Normal;
+            systemTrayIcon.Visible = false;
+        }
+
+        /// <summary>
+        /// Stops the Balloon icon from ever being displayed again by setting a user Setting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void systemTrayIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.showMinimisedBalloonTip = false;
+            Properties.Settings.Default.Save();
+        }
  
         /// <summary>
         /// Specifies and adds the quicktime movie events (pause, play etc) to a quicktime movie. Anything that then listens to the QTEvent event will then pick up these events.
@@ -461,6 +508,7 @@ namespace AirStreamPlayer
    
                 // end of video
                 case (int)QTEventIDsEnum.qtEventMovieDidEnd:
+                        setVideoFullscreen(false); //might as well end the fullscreen at the end of the video
                         theServer.sendStatusMessage("stopped");
                         break;
 
@@ -519,13 +567,16 @@ namespace AirStreamPlayer
                     setVideoFullscreen(true);
                 }
                 videoHasAlreadyBeenStarted = true; //set this to true to say that the playing event has been fired at least once, so any subsequent firings of the event aren't the first time the player has started playing this video (so any playing events from now on are probably resuming playback, not starting it)
-
-
             }
             else if (e.newState == 2) //paused
             {
                 Debug.WriteLine("Playerstate changed to paused");
                 theServer.sendStatusMessage("paused");
+            }
+            else if (e.newState == 8) //media ended
+            {
+                setVideoFullscreen(false);//might as well end the fullscreen
+                theServer.sendStatusMessage("stopped");
             }
         }
 
@@ -661,7 +712,6 @@ namespace AirStreamPlayer
             Properties.Settings.Default.startVideosFullscreen = startVideosFullscreenToolStripMenuItem.Checked;
             Properties.Settings.Default.Save();
         }
-
 
     }
 }

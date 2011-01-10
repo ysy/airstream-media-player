@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Publish));
             this.messagesBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,6 +36,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showDebugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.useWindowsMediaPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startVideosFullscreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullscreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +48,7 @@
             this.player = new AxWMPLib.AxWindowsMediaPlayer();
             this.quicktimePlayer = new AxQTOControlLib.AxQTControl();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.startVideosFullscreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.systemTrayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip.SuspendLayout();
             this.DebugBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.player)).BeginInit();
@@ -115,6 +117,13 @@
             this.useWindowsMediaPlayerToolStripMenuItem.Text = "Use Windows Media &Player";
             this.useWindowsMediaPlayerToolStripMenuItem.Click += new System.EventHandler(this.useWindowsMediaPlayerToolStripMenuItem_Click);
             // 
+            // startVideosFullscreenToolStripMenuItem
+            // 
+            this.startVideosFullscreenToolStripMenuItem.Name = "startVideosFullscreenToolStripMenuItem";
+            this.startVideosFullscreenToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
+            this.startVideosFullscreenToolStripMenuItem.Text = "&Start Videos Fullscreen";
+            this.startVideosFullscreenToolStripMenuItem.Click += new System.EventHandler(this.startVideosFullscreenToolStripMenuItem_Click);
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
@@ -133,7 +142,7 @@
             // fullscreenToolStripMenuItem
             // 
             this.fullscreenToolStripMenuItem.Name = "fullscreenToolStripMenuItem";
-            this.fullscreenToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fullscreenToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.fullscreenToolStripMenuItem.Text = "&Fullscreen";
             this.fullscreenToolStripMenuItem.Click += new System.EventHandler(this.fullscreenToolStripMenuItem_Click);
             // 
@@ -222,12 +231,16 @@
             this.pictureBox.TabStop = false;
             this.pictureBox.Visible = false;
             // 
-            // startVideosFullscreenToolStripMenuItem
+            // systemTrayIcon
             // 
-            this.startVideosFullscreenToolStripMenuItem.Name = "startVideosFullscreenToolStripMenuItem";
-            this.startVideosFullscreenToolStripMenuItem.Size = new System.Drawing.Size(216, 22);
-            this.startVideosFullscreenToolStripMenuItem.Text = "&Start Videos Fullscreen";
-            this.startVideosFullscreenToolStripMenuItem.Click += new System.EventHandler(this.startVideosFullscreenToolStripMenuItem_Click);
+            this.systemTrayIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.systemTrayIcon.BalloonTipText = "The application has been minimised to the system tray. To restore it, double clic" +
+                "k on it\'s icon below. Click here to prevent this message showing again.";
+            this.systemTrayIcon.BalloonTipTitle = "Minimised to System Tray";
+            this.systemTrayIcon.Text = "Air Stream Media Player";
+            this.systemTrayIcon.BalloonTipClicked += new System.EventHandler(this.systemTrayIcon_BalloonTipClicked);
+            this.systemTrayIcon.BalloonTipClosed += new System.EventHandler(this.systemTrayIcon_BalloonTipClicked);
+            this.systemTrayIcon.DoubleClick += new System.EventHandler(this.systemTrayIcon_DoubleClick);
             // 
             // Publish
             // 
@@ -244,6 +257,7 @@
             this.Name = "Publish";
             this.Text = "Air Stream player for Windows";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Publish_FormClosing);
+            this.Resize += new System.EventHandler(this.Publish_Resize);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.DebugBox.ResumeLayout(false);
@@ -276,5 +290,6 @@
         private System.Windows.Forms.ToolStripMenuItem imageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveImageAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startVideosFullscreenToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon systemTrayIcon;
     }
 }

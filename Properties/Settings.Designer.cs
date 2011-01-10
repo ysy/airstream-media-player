@@ -70,5 +70,17 @@ namespace AirStreamPlayer.Properties {
                 this["startVideosFullscreen"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showMinimisedBalloonTip {
+            get {
+                return ((bool)(this["showMinimisedBalloonTip"]));
+            }
+            set {
+                this["showMinimisedBalloonTip"] = value;
+            }
+        }
     }
 }

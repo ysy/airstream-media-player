@@ -135,9 +135,21 @@ namespace AirStreamPlayer
                                 return;
                             }
 
+                            //if the application is minimised to system tray and it isn't set to go fullscreen on playing a file, restore it ready to play the file. If the start video fullscreen option has been chosen, there's no point restoring the window (and people might actually want it left in the system tray, to mean it can be left running all the time without interfering)
+                            if (systemTrayIcon.Visible == true && !startVideosFullscreenToolStripMenuItem.Checked)
+                            {
+                                systemTrayIcon_DoubleClick(this, null);
+                            }
+
+                            //remove old listeners
                             removeMovieEventListeners(quicktimePlayer.Movie);
+                            
+                            //make the right components visible
                             setPictureBoxVisibility(false);
                             setQuicktimePlayerVisibility(true);
+                            
+                            
+                            //set the url and send the loading status message
                             Debug.WriteLine("Quicktime player attempting to play URL" + parameters[0]);
                             quicktimePlayer.URL = parameters[0];
                             theServer.sendStatusMessage("loading");
@@ -212,12 +224,21 @@ namespace AirStreamPlayer
                                 return;
                             }
 
+                            //if the application is minimised to system tray and it isn't set to go fullscreen on playing a file, restore it ready to play the file. If the start video fullscreen option has been chosen, there's no point restoring the window (and people might actually want it left in the system tray, to mean it can be left running all the time without interfering)
+                            if (systemTrayIcon.Visible == true && !startVideosFullscreenToolStripMenuItem.Checked)
+                            {
+                                systemTrayIcon_DoubleClick(this, null);
+                            }
+
+                            //make the right component visible
                             setPictureBoxVisibility(false);
                             setPlayerVisibility(true);
+
+                            //set the url and send the loading status message
                             player.URL = parameters[0];
                             theServer.sendStatusMessage("loading");
 
-                            videoHasAlreadyBeenStarted = false; //new video started, so set this to false.
+                            videoHasAlreadyBeenStarted = false; //new video started loading, so set this to false.
 
                             //if a start position was given, seek to it
                             if (parameters.Length > 1)
@@ -500,6 +521,12 @@ namespace AirStreamPlayer
 
                 //disable fullscreen if the player was fullscreen
                 setVideoFullscreen(false);
+
+                //restore the application if it was minimised to the system tray
+                if (systemTrayIcon.Visible)
+                {
+                    systemTrayIcon_DoubleClick(this, null);
+                }
 
                 //hide the video player
                 if (usingQuicktime)
