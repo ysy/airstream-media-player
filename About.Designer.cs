@@ -40,11 +40,11 @@
             // 
             this.title.AutoSize = true;
             this.title.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.title.Location = new System.Drawing.Point(53, 9);
+            this.title.Location = new System.Drawing.Point(20, 9);
             this.title.Name = "title";
-            this.title.Size = new System.Drawing.Size(365, 29);
+            this.title.Size = new System.Drawing.Size(419, 29);
             this.title.TabIndex = 0;
-            this.title.Text = "Air Stream player for Windows";
+            this.title.Text = "Air Stream player for Windows v1.1";
             // 
             // byline
             // 
